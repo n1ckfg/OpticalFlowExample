@@ -188,6 +188,12 @@ PVector getNormal(float x, float y) {
 }
 
 // Processing event to play video
-//void movieEvent(Movie m) {
-  //m.read();
-//}
+/*
+void movieEvent(Movie m) {
+  m.read();
+}
+
+void captureEvent(Capture c) {
+  c.read();
+}
+*/
