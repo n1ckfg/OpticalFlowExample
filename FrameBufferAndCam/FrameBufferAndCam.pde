@@ -18,9 +18,10 @@ PGraphics[] renderArray;
 int currentRender;
 
 // ux
-boolean shouldUpdateBufferWithVideo = true;
-boolean shouldDrawLines = true;
+boolean shouldUpdateBufferWithVideo = false;
+boolean shouldDrawLines = false;
 boolean shouldDrawMotionTexture = false;
+float lerpSpeed = 0.05;
 
 void setup() {
   // setup 3D context
@@ -71,6 +72,7 @@ void draw() {
   opencv.useGray();
   opencv.loadImage(video);
   opencv.calculateOpticalFlow();
+  opencv.useColor(PApplet.RGB);
 
   /////////////////////////
 
@@ -128,6 +130,8 @@ void draw() {
   // set uniforms to shaders
   shaderBuffer.set("frame", bufferRead);
   shaderBuffer.set("motion", motionTexture);
+  shaderBuffer.set("frameOrig", opencv.getOutput());
+  shaderBuffer.set("lerpSpeed", lerpSpeed);
 
   if (shouldDrawMotionTexture) {
     // display motion map
@@ -136,7 +140,6 @@ void draw() {
   } else if (shouldUpdateBufferWithVideo) {
     // refill buffer with video
     bufferWrite.resetShader();
-    opencv.useColor(PApplet.RGB);
     bufferWrite.image(opencv.getOutput(), 0, 0, width, height);
   } else {
     // apply pixel displacement with shader

@@ -8,6 +8,8 @@ precision mediump int;
 // textures send from Processing main script
 uniform sampler2D motion;
 uniform sampler2D frame;
+uniform sampler2D frameOrig;
+uniform float lerpSpeed;
 
 // interpolated values from vertex shader
 varying vec4 vertColor;
@@ -31,6 +33,8 @@ void main()
 	// apply uv displacement
 	vec4 framebufferColor = texture2D(frame, uv - offset);
 
+	vec4 frameOrigColor = texture2D(frameOrig, vertTexCoord.st);
+
 	// assign color
-  gl_FragColor = framebufferColor;
+  	gl_FragColor = mix(framebufferColor, frameOrigColor, lerpSpeed);
 }
