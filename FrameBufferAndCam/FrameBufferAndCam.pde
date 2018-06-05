@@ -5,9 +5,10 @@ OpenCV opencv;
 Capture video;
 
 // resolution
-int videoWidth = 320;
-int videoHeight = 240;
-int levelOfDetails = 2;
+int videoWidth = 320; //320;
+int videoHeight = 180; //240;
+int levelOfDetails = 1; //2;
+int videoScale = 4;
 
 // shader
 PImage motionTexture;
@@ -25,7 +26,8 @@ float lerpSpeed = 0.05;
 
 void setup() {
   // setup 3D context
-  size(640, 480, P3D);
+  size(50, 50, P3D);
+  surface.setSize(videoWidth * videoScale, videoHeight * videoScale);
   colorMode(RGB, 1, 1, 1);
   stroke(255, 255, 255);
   strokeWeight(1);
@@ -161,6 +163,8 @@ void draw() {
   text("press Space to toggle video update", 8, height - 40);
   text("press L to toggle line display", 8, height - 24);
   text("press M to toggle motion texture display", 8, height - 8);
+  
+  surface.setTitle(""+frameRate);
 }
 
 // the current frame buffer
